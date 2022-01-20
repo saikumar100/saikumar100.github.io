@@ -45,7 +45,7 @@ TEST
 function listcamera() {
 	Html5Qrcode.getCameras().then(cameras => {
 		if (cameras && cameras.length) {
-			cameraId = cameras[0].id;
+			cameraId = cameras[1].id;
 			scan(cameraId);
 		}
 		
