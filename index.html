@@ -1,37 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-<script type="text/javascript">
-function myFunction() {
-// This method will trigger user permissions
-Html5Qrcode.getCameras().then(cameras => {
-  /**
-   * devices would be an array of objects of type:
-   * { id: "id", label: "label" }
-   */
-  if (cameras && cameras.length) {
-    var cameraId = cameras[0].id;
-    console.log("camerId is"+cameraId);
-
-  }
-}).catch(err => {
-  // handle err
-});
-}
-
-</script>
-</head>
-<body>
-<h2>Demo JavaScript in Head</h2>
-
-<div id="reader" style="width: 600px"></div>
-
-<button type="button" onclick="myFunction()">Request permissions</button>
-
-</body>
-</html> -->
-
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -40,8 +6,11 @@ Html5Qrcode.getCameras().then(cameras => {
 <body>
 TEST
 <button type="button" onclick="listcamera()">List cameras</button>
+<br/>
+<button type="button" onclick="stopScanning()">StopScanning</button>
 <div id="reader" style="width:600px;"></div>
 <script>
+	const html5Qr = new Html5Qrcode("reader");
 function listcamera() {
 	Html5Qrcode.getCameras().then(cameras => {
 		if (cameras && cameras.length) {
@@ -56,7 +25,6 @@ function listcamera() {
 }
 
 function scan(cameraId) {
-const html5Qr = new Html5Qrcode("reader");
 html5Qr.start(
    cameraId, // retreived in the previous step.
    {
@@ -65,7 +33,7 @@ html5Qr.start(
                   // scannable, rest shaded.
  },
  qrCodeMessage => {     // do something when code is read. For example:
- 	alert(`qr code message: ${qrCodeMessage} `);
+ 	alert("qr code message:"+ ${qrCodeMessage});
      console.log(`QR Code detected: ${qrCodeMessage}`);
  },
  errorMessage => {     // parse error, ideally ignore it. For example:
@@ -74,6 +42,16 @@ html5Qr.start(
  .catch(err => {     // Start failed, handle it. For example, 
      console.log(`Unable to start scanning, error: ${err}`);
  });
+}
+	
+function stopScanning() {
+	html5QrCode.stop().then(ignore => {
+  // QR Code scanning is stopped.
+  console.log("QR Code scanning stopped.");
+}).catch(err => {
+  // Stop failed, handle it.
+  console.log("Unable to stop scanning.");
+});
 }
 </script>
 </body>
